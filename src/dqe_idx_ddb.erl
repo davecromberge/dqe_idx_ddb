@@ -2,25 +2,73 @@
 -behaviour(dqe_idx).
 
 %% API exports
--export([lookup/1, add/6, delete/6]).
+-export([lookup/1, expand/2, add/6, delete/6]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
 
--spec lookup(dqe_idx:query()) -> {ok, {binary(), binary()}}.
+-spec lookup(dqe_idx:lqry()) ->
+                    {ok, [{binary(), binary()}]}.
 lookup({B, M}) ->
     {ok, [{B, dproto:metric_from_list(M)}]};
 
 lookup({B, M, _Where}) ->
     {ok, [{B, dproto:metric_from_list(M)}]}.
 
-add(_,_,_,_,_,_) ->
-    {ok, {0,0}}.
+-spec expand(dqe_idx:bucket(), [dqe_idx:glob_metric()]) ->
+                    {ok, {dqe_idx:bucket(), [dqe_idx:metric()]}}.
+expand(Bkt, Globs) ->
+    Ps1 = lists:map(fun glob_prefix/1, Globs),
+    Ps2 = compress_prefixes(Ps1),
+    case Ps2 of
+        all ->
+            {ok, {Bkt, ddb_connection:list(Bkt)}};
+        _ ->
+            Ms1 = [begin
+                       {ok, Ms} = ddb_connection:list(Bkt, P),
+                       Ms
+                   end || P <- Ps2],
+            Ms2 = lists:usort(lists:flatten(Ms1)),
+            {ok, {Bkt, Ms2}}
+    end.
 
-delete(_,_,_,_,_,_) ->
+
+add(_, _, _, _, _, _) ->
+    {ok, {0, 0}}.
+
+
+delete(_, _, _, _, _, _) ->
     ok.
 
 %%====================================================================
 %% Internal functions
 %%====================================================================
+
+glob_prefix(G) ->
+    glob_prefix(G, []).
+
+glob_prefix([], Prefix) ->
+    dproto:metric_from_list(lists:reverse(Prefix));
+glob_prefix(['*' |_], Prefix) ->
+    dproto:metric_from_list(lists:reverse(Prefix));
+glob_prefix([E | R], Prefix) ->
+    glob_prefix(R, [E | Prefix]).
+
+compress_prefixes(Prefixes) ->
+    compress_prefixes(lists:sort(Prefixes), []).
+
+compress_prefixes([[] | _], _) ->
+    all;
+compress_prefixes([], R) ->
+    R;
+compress_prefixes([E], R) ->
+    [E | R];
+compress_prefixes([A, B | R], Acc) ->
+    case binary:longest_common_prefix([A, B]) of
+        L when L == byte_size(A) ->
+            compress_prefixes([B | R], Acc);
+        _ ->
+            compress_prefixes([B | R], [A | Acc])
+    end.
+
