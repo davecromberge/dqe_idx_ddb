@@ -2,7 +2,7 @@
 -behaviour(dqe_idx).
 
 %% API exports
--export([lookup/1, add/2, delete/2]).
+-export([lookup/1, add/6, delete/6]).
 
 %%====================================================================
 %% API functions
