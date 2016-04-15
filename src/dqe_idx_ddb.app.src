@@ -1,16 +1,10 @@
-{application, dqe_idx_ddb,
- [{description, "DDB driven indexer for Dalmatiner Query engine"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {applications,
-   [kernel,
-    stdlib,
-    dproto,
-    dqe_idx
-   ]},
-  {env,[]},
-  {modules, []},
-  {maintainers, ["Heinz N. Gies"]},
-  {licenses, ["MIT"]},
-  {links, []}
- ]}.
+{application,dqe_idx_ddb,
+             [{description,"DDB driven indexer for Dalmatiner Query engine"},
+              {vsn,"0.1.1"},
+              {registered,[]},
+              {applications,[kernel,stdlib,dproto,dqe_idx]},
+              {env,[]},
+              {modules,[]},
+              {maintainers,["Heinz N. Gies"]},
+              {licenses,["MIT"]},
+              {links,[]}]}.
