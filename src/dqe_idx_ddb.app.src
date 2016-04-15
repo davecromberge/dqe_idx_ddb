@@ -1,5 +1,5 @@
 {application, dqe_idx_ddb,
- [{description, "An OTP library"},
+ [{description, "DDB driven indexer for Dalmatiner Query engine"},
   {vsn, "0.1.0"},
   {registered, []},
   {applications,
@@ -10,8 +10,7 @@
    ]},
   {env,[]},
   {modules, []},
-
-  {maintainers, []},
-  {licenses, []},
+  {maintainers, ["Heinz N. Gies"]},
+  {licenses, ["MIT"]},
   {links, []}
  ]}.
