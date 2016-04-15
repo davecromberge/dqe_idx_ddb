@@ -2,7 +2,7 @@
              [{description,"DDB driven indexer for Dalmatiner Query engine"},
               {vsn,"0.1.2"},
               {registered,[]},
-              {applications,[kernel,stdlib,dproto,dqe_idx]},
+              {applications,[kernel,stdlib,dproto,dqe_idx,ddb_connection]},
               {env,[]},
               {modules,[]},
               {maintainers,["Heinz N. Gies"]},
