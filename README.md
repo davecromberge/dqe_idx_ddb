@@ -1,7 +1,7 @@
 dqe_idx_ddb
 =====
 
-An OTP library
+Simple plain DDB indexer engine implementation for DQE.
 
 Build
 -----
