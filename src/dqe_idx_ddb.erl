@@ -2,11 +2,18 @@
 -behaviour(dqe_idx).
 
 %% API exports
--export([lookup/1, expand/2, add/6, delete/6]).
+-export([lookup/1, expand/2, init/0,
+         add/4, add/5, add/6,
+         delete/4, delete/5, delete/6]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
+
+
+init() ->
+    %% We do not need to initialize anything here.
+    ok.
 
 -spec lookup(dqe_idx:lqry()) ->
                     {ok, [{binary(), binary()}]}.
@@ -34,9 +41,20 @@ expand(Bkt, Globs) ->
     end.
 
 
-add(_, _, _, _, _, _) ->
-    {ok, {0, 0}}.
+add(_, _, _, _) ->
+    {ok, 0}.
 
+add(_, _, _, _, _) ->
+    {ok, 0}.
+
+add(_, _, _, _, _, _) ->
+    {ok, 0}.
+
+delete(_, _, _, _) ->
+    ok.
+
+delete(_, _, _, _, _) ->
+    ok.
 
 delete(_, _, _, _, _, _) ->
     ok.
@@ -58,7 +76,7 @@ glob_prefix([E | R], Prefix) ->
 compress_prefixes(Prefixes) ->
     compress_prefixes(lists:sort(Prefixes), []).
 
-compress_prefixes([[] | _], _) ->
+compress_prefixes([<<>> | _], _) ->
     all;
 compress_prefixes([], R) ->
     R;
@@ -71,4 +89,3 @@ compress_prefixes([A, B | R], Acc) ->
         _ ->
             compress_prefixes([B | R], [A | Acc])
     end.
-
