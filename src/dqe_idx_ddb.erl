@@ -17,10 +17,10 @@ init() ->
 
 -spec lookup(dqe_idx:lqry()) ->
                     {ok, [{binary(), binary()}]}.
-lookup({B, M}) ->
+lookup({'in', B, M}) ->
     {ok, [{B, dproto:metric_from_list(M)}]};
 
-lookup({B, M, _Where}) ->
+lookup({'in', B, M, _Where}) ->
     {ok, [{B, dproto:metric_from_list(M)}]}.
 
 -spec expand(dqe_idx:bucket(), [dqe_idx:glob_metric()]) ->
@@ -30,7 +30,8 @@ expand(Bkt, Globs) ->
     Ps2 = compress_prefixes(Ps1),
     case Ps2 of
         all ->
-            {ok, {Bkt, ddb_connection:list(Bkt)}};
+            {ok, Ms} = ddb_connection:list(Bkt),
+            {ok, {Bkt, Ms}};
         _ ->
             Ms1 = [begin
                        {ok, Ms} = ddb_connection:list(Bkt, P),
