@@ -3,8 +3,8 @@
 
 %% API exports
 -export([lookup/1, expand/2, init/0,
-         add/5, add/6, add/7,
-         delete/5, delete/6, delete/7]).
+         add/4, add/5, add/7,
+         delete/4, delete/5, delete/7]).
 
 %%====================================================================
 %% API functions
@@ -42,19 +42,19 @@ expand(Bkt, Globs) ->
     end.
 
 
-add(_, _, _, _, _) ->
+add(_, _, _, _) ->
     {ok, 0}.
 
-add(_, _, _, _, _, _) ->
+add(_, _, _, _, _) ->
     {ok, 0}.
 
 add(_, _, _, _, _, _, _) ->
     {ok, 0}.
 
-delete(_, _, _, _, _) ->
+delete(_, _, _, _) ->
     ok.
 
-delete(_, _, _, _, _, _) ->
+delete(_, _, _, _, _) ->
     ok.
 
 delete(_, _, _, _, _, _, _) ->
