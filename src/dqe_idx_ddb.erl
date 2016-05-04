@@ -2,7 +2,10 @@
 -behaviour(dqe_idx).
 
 %% API exports
--export([lookup/1, expand/2, init/0,
+-export([init/0,
+         lookup/1, lookup_tags/1,
+         collections/0, metrics/1, namespaces/2, tags/3,
+         expand/2,
          add/4, add/5, add/7,
          delete/4, delete/5, delete/7]).
 
@@ -23,6 +26,9 @@ lookup({'in', B, M}) ->
 lookup({'in', B, M, _Where}) ->
     {ok, [{B, dproto:metric_from_list(M)}]}.
 
+lookup_tags(_) ->
+    {ok, []}.
+
 -spec expand(dqe_idx:bucket(), [dqe_idx:glob_metric()]) ->
                     {ok, {dqe_idx:bucket(), [dqe_idx:metric()]}}.
 expand(Bkt, Globs) ->
@@ -41,6 +47,17 @@ expand(Bkt, Globs) ->
             {ok, {Bkt, Ms2}}
     end.
 
+collections() ->
+    ddb_connection:list().
+
+metrics(Bucket) ->
+    ddb_connection:list(Bucket).
+
+namespaces(_, _) ->
+    {ok, []}.
+
+tags(_, _, _) ->
+    {ok, []}.
 
 add(_, _, _, _) ->
     {ok, 0}.
