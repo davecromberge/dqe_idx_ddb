@@ -3,11 +3,11 @@
 
 %% API exports
 -export([init/0,
-         lookup/1, lookup_tags/1,
-         collections/0, metrics/1, namespaces/2, tags/3,
+         lookup/1, lookup/2, lookup_tags/1,
+         collections/0, metrics/1, namespaces/2, tags/3, values/4,
          expand/2,
-         add/4, add/5, add/7,
-         delete/4, delete/5, delete/7]).
+         add/4, add/5, update/5,
+         delete/4, delete/5]).
 
 %%====================================================================
 %% API functions
@@ -18,8 +18,10 @@ init() ->
     %% We do not need to initialize anything here.
     ok.
 
--spec lookup(dqe_idx:lqry()) ->
-                    {ok, [{binary(), binary()}]}.
+lookup(Q, _G) ->
+    {ok, [{B, M}]} = lookup(Q),
+    {ok, [{B, M, []}]}.
+
 lookup({'in', B, M}) ->
     {ok, [{B, dproto:metric_from_list(M)}]};
 
@@ -59,22 +61,22 @@ namespaces(_, _) ->
 tags(_, _, _) ->
     {ok, []}.
 
+values(_, _, _, _) ->
+    {ok, []}.
+
 add(_, _, _, _) ->
     {ok, 0}.
 
 add(_, _, _, _, _) ->
     {ok, 0}.
 
-add(_, _, _, _, _, _, _) ->
+update(_, _, _, _, _) ->
     {ok, 0}.
 
 delete(_, _, _, _) ->
     ok.
 
 delete(_, _, _, _, _) ->
-    ok.
-
-delete(_, _, _, _, _, _, _) ->
     ok.
 
 %%====================================================================
