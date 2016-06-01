@@ -4,8 +4,8 @@
 %% API exports
 -export([init/0,
          lookup/1, lookup/2, lookup_tags/1,
-         collections/0, metrics/1, namespaces/2, tags/3, values/4,
-         expand/2,
+         collections/0, metrics/1, namespaces/1, namespaces/2,
+         tags/2, tags/3, values/3, values/4, expand/2,
          add/4, add/5, update/5,
          delete/4, delete/5]).
 
@@ -55,10 +55,19 @@ collections() ->
 metrics(Bucket) ->
     ddb_connection:list(Bucket).
 
+namespaces(_) ->
+    {ok, []}.
+
 namespaces(_, _) ->
     {ok, []}.
 
+tags(_, _) ->
+    {ok, []}.
+
 tags(_, _, _) ->
+    {ok, []}.
+
+values(_, _, _) ->
     {ok, []}.
 
 values(_, _, _, _) ->
