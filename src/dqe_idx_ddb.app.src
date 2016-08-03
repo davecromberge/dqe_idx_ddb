@@ -1,6 +1,6 @@
 {application,dqe_idx_ddb,
              [{description,"DDB driven indexer for Dalmatiner Query engine"},
-              {vsn,"0.1.13"},
+              {vsn,"0.1.14"},
               {registered,[]},
               {applications,[kernel,stdlib,dproto,dqe_idx,ddb_connection]},
               {env,[]},
