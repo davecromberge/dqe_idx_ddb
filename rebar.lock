@@ -1,6 +1,8 @@
-[{<<"ddb_client">>,{pkg,<<"ddb_client">>,<<"0.1.24">>},1},
- {<<"ddb_connection">>,{pkg,<<"ddb_connection">>,<<"0.1.6">>},0},
- {<<"dproto">>,{pkg,<<"dproto">>,<<"0.1.20">>},0},
- {<<"dqe_idx">>,{pkg,<<"dqe_idx">>,<<"0.1.18">>},0},
- {<<"mmath">>,{pkg,<<"mmath">>,<<"0.2.5">>},1},
- {<<"poolboy">>,{pkg,<<"poolboy">>,<<"1.5.1">>},1}].
+[{<<"ddb_client">>,{pkg,<<"ddb_client">>,<<"0.1.32">>},1},
+ {<<"ddb_connection">>,{pkg,<<"ddb_connection">>,<<"0.1.14">>},0},
+ {<<"dproto">>,{pkg,<<"dproto">>,<<"0.1.25">>},0},
+ {<<"dqe_idx">>,{pkg,<<"dqe_idx">>,<<"0.1.19">>},0},
+ {<<"jsxd">>,{pkg,<<"jsxd">>,<<"0.2.3">>},1},
+ {<<"mmath">>,{pkg,<<"mmath">>,<<"0.2.9">>},1},
+ {<<"poolboy">>,{pkg,<<"poolboy">>,<<"1.5.1">>},1},
+ {<<"snappy">>,{pkg,<<"snappy">>,<<"1.1.1">>},1}].
