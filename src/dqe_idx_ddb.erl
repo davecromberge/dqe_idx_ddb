@@ -22,8 +22,14 @@ lookup(Q, _G) ->
     {ok, [{B, M}]} = lookup(Q),
     {ok, [{B, M, []}]}.
 
+lookup({'in', B, undefined}) ->
+    {ok, lookup_all(B)};
+
 lookup({'in', B, M}) ->
     {ok, [{B, dproto:metric_from_list(M)}]};
+
+lookup({'in', B, undefined, _Where}) ->
+    {ok, lookup_all(B)};
 
 lookup({'in', B, M, _Where}) ->
     {ok, [{B, dproto:metric_from_list(M)}]}.
@@ -118,3 +124,7 @@ compress_prefixes([A, B | R], Acc) ->
         _ ->
             compress_prefixes([B | R], [A | Acc])
     end.
+
+lookup_all(Bucket) ->
+    {ok, Ms} = ddb_connection:list(Bucket),
+    [{Bucket, M} || M <- Ms].
